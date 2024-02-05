@@ -1,0 +1,2 @@
+from ti_vit.model import TICompatibleVitOrtMaxAcc
+from ti_vit.model import TICompatibleVitOrtMaxPerf

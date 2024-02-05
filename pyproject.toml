@@ -1,0 +1,62 @@
+[project]
+name = 'ti-vit'
+version = '0.0.1'
+dependencies = [
+    'torch==1.13.1',
+    'torchvision==0.14.1',
+]
+
+[project.scripts]
+export-ti-vit = "ti_vit.export:export_ti_compatible_vit"
+
+[tool.black]
+line-length = 120
+target-version = ["py38", "py39"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 120
+ensure_newline_before_comments = true
+force_single_line = true
+
+[tool.nbqa.mutate]
+pyupgrade = 1
+
+[tool.nbqa.addopts]
+pyupgrade = ["--py38-plus"]
+
+[tool.docformatter]
+recursive = true
+wrap-summaries = 0
+wrap-descriptions = 0
+blank = true
+black = true
+pre-summary-newline = true
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.design]
+max-args = 12
+max-locals = 30
+max-attributes = 20
+min-public-methods = 0
+
+[tool.pylint.typecheck]
+generated-members = ["torch.*"]
+
+[tool.pylint.messages_control]
+disable = [
+  "logging-fstring-interpolation",
+  "missing-module-docstring",
+  "unnecessary-pass",
+]
+
+[tool.pylint.BASIC]
+good-names = ["B", "N", "C"]
+
+[tool.pyright]
+reportMissingImports = false
+reportMissingTypeStubs = false
+reportWildcardImportFromLibrary = false
