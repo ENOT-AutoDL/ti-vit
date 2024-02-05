@@ -1,6 +1,6 @@
 # TI-ViT
 
-The repository contains script for export pytorch VIT model to onnx format in form that compatible with 
+The repository contains script for exporting PyTorch VIT model to ONNX format in the form that compatible with 
 [edgeai-tidl-tools](https://github.com/TexasInstruments/edgeai-tidl-tools) (version 8.6.0.5). 
 
 ## Installation
