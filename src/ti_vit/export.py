@@ -29,7 +29,7 @@ def export(
     Parameters
     ----------
     output_onnx_path : Union[str, Path]
-        Path to the output onnx.
+        Path to the output ONNX file.
     model_type : str
         Type of the final model. Possible values are "npu-max-acc", "npu-max-perf" or "cpu".
     checkpoint_path : Optional[Union[str, Path]] = None
