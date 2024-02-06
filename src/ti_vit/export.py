@@ -1,4 +1,5 @@
 import argparse
+import json
 import logging
 import sys
 import warnings
@@ -6,12 +7,16 @@ from pathlib import Path
 from typing import Optional
 from typing import Union
 
+import onnx
 import torch
+from onnxsim import simplify
 from torchvision.models import ViT_B_16_Weights
 from torchvision.models import vit_b_16
 
 from ti_vit.model import TICompatibleVitOrtMaxAcc
 from ti_vit.model import TICompatibleVitOrtMaxPerf
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def export(
@@ -56,21 +61,41 @@ def export(
     device = next(model.parameters()).device
     dummy_data = torch.ones([1, 3, resolution, resolution], dtype=torch.float32, device=device)
 
+    output_onnx_path = Path(output_onnx_path)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")  # disable export warnings
         torch.onnx.export(
             model=model,
-            f=str(output_onnx_path),
+            f=str(output_onnx_path.resolve()),
             args=dummy_data,
             input_names=["input"],
             output_names=["output"],
             opset_version=9,
         )
+        _LOGGER.info(f'model exported to onnx (path = "{output_onnx_path}")')
+
+    onnx_model = onnx.load(output_onnx_path)
+    onnx_model, ok = simplify(onnx_model)
+    if not ok:
+        _LOGGER.error("onnx-simplifier step is failed")
+    else:
+        onnx.save_model(onnx_model, f=output_onnx_path)
+        _LOGGER.info("onnx simplified")
+
+    if model_type != "cpu":
+        deny_list = [node.name for node in onnx_model.graph.node if "mlp" not in node.name or node.op_type == "Squeeze"]
+        deny_list_path = output_onnx_path.with_suffix(".deny_list")
+        with deny_list_path.open("wt") as deny_list_file:  # pylint: disable=unspecified-encoding
+            json.dump(deny_list, fp=deny_list_file, indent=4)
+            _LOGGER.info(f'deny list created (path = "{output_onnx_path}")')
 
 
 def export_ti_compatible_vit() -> None:  # pylint: disable=missing-function-docstring
     logger = logging.getLogger("ti_vit")
-    logger.addHandler(logging.StreamHandler(sys.stdout))
+    handler = logging.StreamHandler(sys.stdout)
+    formatter = logging.Formatter(fmt="%(levelname)s: %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
     logger.setLevel(logging.INFO)
 
     parser = argparse.ArgumentParser()

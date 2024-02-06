@@ -2,6 +2,8 @@
 name = 'ti-vit'
 version = '0.0.1'
 dependencies = [
+    'onnx',
+    'onnx-simplifier',
     'torch==1.13.1',
     'torchvision==0.14.1',
 ]
