@@ -31,7 +31,7 @@ def export(
     output_onnx_path : Union[str, Path]
         Path to the output ONNX file.
     model_type : str
-        Type of the final model. Possible values are "npu-max-acc", "npu-max-perf" or "cpu".
+        Type of the final model. Possible values are "max-acc", "max-perf" or "cpu".
     checkpoint_path : Optional[Union[str, Path]] = None
         Path to the PyTorch model checkpoint. If value is None, then ViT_B_16 pretrained torchvision model is used.
         Default value is None.
@@ -49,9 +49,9 @@ def export(
     try:
         transform_model_func = {
             "cpu": lambda model: model,
-            "npu-max-acc": TICompatibleVitOrtMaxAcc,
-            "npu-max-perf": lambda model: TICompatibleVitOrtMaxPerf(model=model, ignore_tidl_errors=False),
-            "npu-max-perf-experimental": lambda model: TICompatibleVitOrtMaxPerf(model=model, ignore_tidl_errors=True),
+            "max-acc": TICompatibleVitOrtMaxAcc,
+            "max-perf": lambda model: TICompatibleVitOrtMaxPerf(model=model, ignore_tidl_errors=False),
+            "max-perf-experimental": lambda model: TICompatibleVitOrtMaxPerf(model=model, ignore_tidl_errors=True),
         }[model_type]
     except KeyError as exc:
         raise ValueError(f"Got unknown transformation type ('{model_type}')") from exc
@@ -105,9 +105,9 @@ def export_ti_compatible_vit() -> None:  # pylint: disable=missing-function-docs
         "--model-type",
         type=str,
         required=False,
-        default="npu-max-perf",
-        help='Type of the final model (optional argument). Possible values are "npu-max-acc", "npu-max-perf", or "cpu".'
-        ' Default value is "npu-max-perf".',
+        default="max-perf",
+        help='Type of the final model (optional argument). Possible values are "max-acc", "max-perf", or "cpu".'
+        ' Default value is "max-perf".',
     )
     parser.add_argument(
         "-c",
