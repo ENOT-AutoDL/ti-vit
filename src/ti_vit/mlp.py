@@ -117,7 +117,7 @@ class TICompatibleMLP(nn.Module):
         gelu_approx_type: GeluApproximationType = GeluApproximationType.NONE,
     ) -> "TICompatibleMLP":
         """
-        Create TI compatible MLP block from common Vit MLP block.
+        Create TI compatible MLP block from common ViT MLP block.
 
         Parameters
         ----------

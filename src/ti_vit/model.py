@@ -59,14 +59,14 @@ class _TICompatibleVit(nn.Module):
 
 
 class TICompatibleVitOrtMaxPerf(_TICompatibleVit):
-    """TI compatible Vit model with maximal performance."""
+    """TI compatible ViT model with maximum performance."""
 
     def __init__(self, model: VisionTransformer, ignore_tidl_errors: bool = False):
         """
         Parameters
         ----------
         model : VisionTransformer
-            Source Vit model.
+            Source ViT model.
         ignore_tidl_errors : bool
             Experimental option.
         """
@@ -95,14 +95,14 @@ class TICompatibleVitOrtMaxPerf(_TICompatibleVit):
 
 
 class TICompatibleVitOrtMaxAcc(_TICompatibleVit):
-    """TI compatible Vit model with minimal accuracy drop."""
+    """TI compatible ViT model with minimal accuracy drop."""
 
     def __init__(self, model: VisionTransformer):
         """
         Parameters
         ----------
         model : VisionTransformer
-            Source Vit model.
+            Source ViT model.
         """
         super().__init__(
             model=model,

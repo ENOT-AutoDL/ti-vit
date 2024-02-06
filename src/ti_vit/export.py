@@ -33,7 +33,7 @@ def export(
     model_type : str
         Type of the final model. Possible values are "npu-max-acc", "npu-max-perf" or "cpu".
     checkpoint_path : Optional[Union[str, Path]] = None
-        Path to the pytorch model checkpoint. If value is None, then ViT_B_16 pretrained torchvision model is used.
+        Path to the PyTorch model checkpoint. If value is None, then ViT_B_16 pretrained torchvision model is used.
         Default value is None.
     resolution : int
         Resolution of input image. Default value is 224.
@@ -114,7 +114,7 @@ def export_ti_compatible_vit() -> None:  # pylint: disable=missing-function-docs
         "--checkpoint",
         type=str,
         required=False,
-        help="Path to the Vit checkpoint (optional argument). By default we download the torchvision checkpoint "
+        help="Path to the ViT checkpoint (optional argument). By default torchvision checkpoint is downloaded."
         "(VIT_B_16).",
         default=None,
     )

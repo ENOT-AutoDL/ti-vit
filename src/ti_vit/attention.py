@@ -117,7 +117,7 @@ class TICompatibleAttention(nn.Module):
         attention_type: AttentionType = AttentionType.CONV_CONV,
     ) -> "TICompatibleAttention":
         """
-        Create TI compatible attention block from common Vit attention block.
+        Create TI compatible attention block from common ViT attention block.
 
         Parameters
         ----------
