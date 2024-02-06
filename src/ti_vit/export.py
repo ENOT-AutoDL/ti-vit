@@ -87,7 +87,7 @@ def export(
         deny_list_path = output_onnx_path.with_suffix(".deny_list")
         with deny_list_path.open("wt") as deny_list_file:  # pylint: disable=unspecified-encoding
             json.dump(deny_list, fp=deny_list_file, indent=4)
-            _LOGGER.info(f'deny list created (path = "{output_onnx_path}")')
+            _LOGGER.info(f'deny list created (path = "{deny_list_path}")')
 
 
 def export_ti_compatible_vit() -> None:  # pylint: disable=missing-function-docstring
