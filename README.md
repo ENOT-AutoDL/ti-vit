@@ -34,7 +34,7 @@ It is important to disable compilation of all nodes except nodes from MLP blocks
 disabled too). The list of operations for ["deny_list:layer_name"](https://github.com/TexasInstruments/edgeai-tidl-tools/blob/08_06_00_05/examples/osrt_python/README.md#options-to-enable-control-on-layer-level-delegation-to-ti-dsparm) 
 compiler option can be found in the file "output-onnx-dir/output-onnx-name.deny_list", that is generated with onnx file.
 
-## Results
+## Results (TI-TDA4-J721EXSKG01EVM)
 
 ### TorchVision ViT B16
 |          | CPU only | max-acc | max-perf |
